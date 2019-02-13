@@ -45,7 +45,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3YG-PI-K3O">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3YG-PI-K3O">
                                         <rect key="frame" x="16" y="129" width="382" height="229"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21°" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5y4-ef-fw6" userLabel="Temperature Label">
@@ -123,6 +123,9 @@
                                         <state key="normal" title="Get Weather">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="getWeatherButtonPressed:" destination="2mO-uK-WCV" eventType="touchUpInside" id="DH3-uG-pIp"/>
+                                        </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter City Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oZ7-A7-Eo3" userLabel="City Name Text Field">
                                         <rect key="frame" x="133.66666666666666" y="115" width="146.99999999999997" height="30"/>
@@ -137,6 +140,9 @@
                                             <constraint firstAttribute="width" constant="32" id="rUm-wM-ZbU"/>
                                         </constraints>
                                         <state key="normal" image="left"/>
+                                        <connections>
+                                            <action selector="backButtonPressed:" destination="2mO-uK-WCV" eventType="touchUpInside" id="1Fo-jm-GCF"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -166,6 +172,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="w35-b8-BIs"/>
                     </view>
+                    <connections>
+                        <outlet property="changeCityTextField" destination="oZ7-A7-Eo3" id="sY8-Dm-a10"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="St8-6F-iUe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

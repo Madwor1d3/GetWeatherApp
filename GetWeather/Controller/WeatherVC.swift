@@ -11,7 +11,7 @@ import CoreLocation
 import Alamofire
 import SwiftyJSON
 
-class WeatherVC: UIViewController, CLLocationManagerDelegate {
+class WeatherVC: UIViewController, CLLocationManagerDelegate, ChangeCityDelegate {
     
     
     let WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather"
@@ -77,8 +77,8 @@ class WeatherVC: UIViewController, CLLocationManagerDelegate {
         let location = locations[locations.count - 1] //Когда CoreLocation ищет информацию, то помещает данные в массив [CLLocation], последний индекс - самая точная инфа
         
         if location.horizontalAccuracy > 0 {
-            locationManager.stopUpdatingLocation()
-            locationManager.delegate = nil
+            
+            self.locationManager.stopUpdatingLocation()
             
             print("longitude = \(location.coordinate.longitude), latitude = \(location.coordinate.latitude)")
             
@@ -98,17 +98,21 @@ class WeatherVC: UIViewController, CLLocationManagerDelegate {
     func updateWeatherData(json: JSON) {
         
         if let tempResult = json["main"]["temp"].double {
-        
-        weatherDataModel.temperature = Int(tempResult - 273.15)
-        
-        weatherDataModel.city = json["name"].stringValue
-        
-        weatherDataModel.condition = json["weather"][0]["id"].intValue
-        
-        weatherDataModel.weatherIconName = weatherDataModel.updateWeatherIcon(condition: weatherDataModel.condition)
-        }
-        else {
+            
+            weatherDataModel.temperature = Int(tempResult - 273.15)
+            
+            weatherDataModel.city = json["name"].stringValue
+            
+            weatherDataModel.condition = json["weather"][0]["id"].intValue
+            
+            weatherDataModel.weatherIconName = weatherDataModel.updateWeatherIcon(condition: weatherDataModel.condition)
+            
+            updateUIWithWeaherData()
+            
+        } else {
+
             cityLabel.text = "Weather unavailable"
+
         }
     }
     
@@ -134,5 +138,30 @@ class WeatherVC: UIViewController, CLLocationManagerDelegate {
         cityLabel.text = "Location   Unavailable"
         
     }
+    
+    //Mark: - Change City Delegate Methods
+    /***************************************************************/
+    
+    func userEnteredANewCityName(city: String) {
+        
+        let params : [String : String] = ["q" : city, "appid" : APP_ID]
+        
+        getWeatherData(url: WEATHER_URL, parameters: params)
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "goToChangeCityVC" {
+            
+            let destinationVC = segue.destination as! ChangeCityVC
+            
+            destinationVC.delegate = self
+            
+        }
+    }
+    
 }
+
+
 
