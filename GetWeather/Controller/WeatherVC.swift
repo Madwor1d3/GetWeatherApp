@@ -14,9 +14,11 @@ import SwiftyJSON
 class WeatherVC: UIViewController, CLLocationManagerDelegate {
     
     
-    let WEATHER_URL = "https://api.darksky.net/forecast/[key]/[latitude],[longitude]"
-    let APP_ID = "0003c8b808e3ed25e649612abf659184"
+    let WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather"
+    let APP_ID = "9514f2012a6166b7dd124fac9d129950"
+    
     let locationManager = CLLocationManager()
+    let weatherDataModel = WeatherDataModel()
     
     
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -24,19 +26,24 @@ class WeatherVC: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var cityLabel: UILabel!
     
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
         locationManager.delegate = self //Принимает делигирование на себя
+        
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        
         locationManager.requestWhenInUseAuthorization()
+        
         locationManager.startUpdatingLocation()
         
     }
 
 
     @IBAction func changeViewsButtonPressed(_ sender: UIButton) {
+        
+        performSegue(withIdentifier: "goToChangeCityVC", sender: self)
+        
     }
     
     
@@ -52,18 +59,13 @@ class WeatherVC: UIViewController, CLLocationManagerDelegate {
                 
                 print("Success! Got the weather data")
                 let weatherJSON : JSON = JSON(response.result.value!)
-                
-                
-                print(weatherJSON)
-                
-                
+                self.updateWeatherData(json: weatherJSON)
             }
             else {
                 print("Error \(String(describing: response.result.error))")
                 self.cityLabel.text = "Connection Issues"
             }
         }
-        
     }
     
     
@@ -73,6 +75,7 @@ class WeatherVC: UIViewController, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let location = locations[locations.count - 1] //Когда CoreLocation ищет информацию, то помещает данные в массив [CLLocation], последний индекс - самая точная инфа
+        
         if location.horizontalAccuracy > 0 {
             locationManager.stopUpdatingLocation()
             locationManager.delegate = nil
@@ -83,15 +86,53 @@ class WeatherVC: UIViewController, CLLocationManagerDelegate {
             let longitude = String(location.coordinate.longitude)
             
             let params : [String : String] = ["lat" : latitude, "lon" : longitude, "appid" : APP_ID]
-            
             getWeatherData(url: WEATHER_URL, parameters: params)
             
         }
     }
     
+    
+    //Mark: - JSON Parsing
+    /***************************************************************/
+    
+    func updateWeatherData(json: JSON) {
+        
+        if let tempResult = json["main"]["temp"].double {
+        
+        weatherDataModel.temperature = Int(tempResult - 273.15)
+        
+        weatherDataModel.city = json["name"].stringValue
+        
+        weatherDataModel.condition = json["weather"][0]["id"].intValue
+        
+        weatherDataModel.weatherIconName = weatherDataModel.updateWeatherIcon(condition: weatherDataModel.condition)
+        }
+        else {
+            cityLabel.text = "Weather unavailable"
+        }
+    }
+    
+    
+    //Mark: - UI Updates
+    /***************************************************************/
+    
+    func updateUIWithWeaherData() {
+        
+        cityLabel.text = weatherDataModel.city
+        
+        temperatureLabel.text = "\(weatherDataModel.temperature)°"
+        
+        weatherIcon.image = UIImage(named: weatherDataModel.weatherIconName)
+        
+    }
+    
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        
         print(error)
+        
         cityLabel.text = "Location   Unavailable"
+        
     }
 }
 
