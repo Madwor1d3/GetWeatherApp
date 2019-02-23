@@ -109,7 +109,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AnotherCityBG" translatesAutoresizingMaskIntoConstraints="NO" id="DPA-e7-sVe">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JMj-2o-KIr">
                                 <rect key="frame" x="0.0" y="20" width="414" height="220"/>
@@ -166,8 +166,8 @@
                             <constraint firstItem="w35-b8-BIs" firstAttribute="trailing" secondItem="DPA-e7-sVe" secondAttribute="trailing" id="GPL-KF-FRV"/>
                             <constraint firstItem="w35-b8-BIs" firstAttribute="trailing" secondItem="JMj-2o-KIr" secondAttribute="trailing" id="MI5-WK-YIq"/>
                             <constraint firstItem="JMj-2o-KIr" firstAttribute="leading" secondItem="w35-b8-BIs" secondAttribute="leading" id="Nb1-fI-4hY"/>
-                            <constraint firstItem="DPA-e7-sVe" firstAttribute="top" secondItem="w35-b8-BIs" secondAttribute="top" id="W0P-HB-tEr"/>
-                            <constraint firstItem="w35-b8-BIs" firstAttribute="bottom" secondItem="DPA-e7-sVe" secondAttribute="bottom" id="amo-My-CtH"/>
+                            <constraint firstItem="DPA-e7-sVe" firstAttribute="top" secondItem="iQD-4L-qIJ" secondAttribute="top" id="W0P-HB-tEr"/>
+                            <constraint firstAttribute="bottom" secondItem="DPA-e7-sVe" secondAttribute="bottom" id="amo-My-CtH"/>
                             <constraint firstItem="DPA-e7-sVe" firstAttribute="leading" secondItem="w35-b8-BIs" secondAttribute="leading" id="lLx-gI-yU9"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="w35-b8-BIs"/>

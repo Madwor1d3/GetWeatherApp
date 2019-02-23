@@ -68,6 +68,8 @@
 				0ABB3E3822131869003AD2D1 /* Model */,
 				0ABB3E3922131872003AD2D1 /* View */,
 				0ABB3E3A221318A4003AD2D1 /* Controller */,
+				0ABB3E2A2213183A003AD2D1 /* Main.storyboard */,
+				0ABB3E2D2213183B003AD2D1 /* Assets.xcassets */,
 				0ABB3E3B221318AE003AD2D1 /* Supporting Files */,
 			);
 			path = GetWeather;
@@ -84,8 +86,6 @@
 		0ABB3E3922131872003AD2D1 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				0ABB3E2A2213183A003AD2D1 /* Main.storyboard */,
-				0ABB3E2D2213183B003AD2D1 /* Assets.xcassets */,
 			);
 			path = View;
 			sourceTree = "<group>";
